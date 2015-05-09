@@ -52,3 +52,9 @@ docs/_build/
 
 # PyBuilder
 target/
+
+sandbox/local_settings.py
+sandbox/wsgi.py
+
+# PyCharm project files
+.idea/

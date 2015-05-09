@@ -1,0 +1,17 @@
+{% extends 'oscar/checkout/preview.html' %}
+{% load currency_filters i18n %}
+
+{% block payment_method %}
+    <div class="span6">
+        <div class="sub-header">
+            <h2>{% trans "Payment" %}</h2>
+        </div>
+        <div class="well well-success">
+            <h3>{% trans "Payment" %}</h3>
+            <p>{% blocktrans with amount=order_total.incl_tax|currency %}
+                <p>Wire transfer will be handled by: <a href="http://przelewy24.pl" target="_blank">Przelewy24.pl</a> - Amount: {{ amount }}</p>
+            {% endblocktrans %}
+
+        </div>
+    </div>
+{% endblock payment_method %}

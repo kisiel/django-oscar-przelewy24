@@ -1,0 +1,78 @@
+{% extends 'dashboard/layout.html' %}
+{% load currency_filters %}
+{% load i18n %}
+{% load url from future %}
+
+{% block title %}
+    {% trans "Przelewy24 transactions" %} | {{ block.super }}
+{% endblock %}
+
+{% block extrastyles %}
+    {{ block.super }}
+
+    <style type="text/css">
+        .status1 a{
+            color: inherit;
+        }
+        .status2, .status2 a{
+            color: #FF0000;
+        }
+        .status3, .status3 a{
+            color: #30821e;
+        }
+        .status4, .status4 a{
+            color: #b7a80c;
+        }
+        .status5, .status5 a{
+            color: #ff7808;
+        }
+    </style>
+
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
+            <span class="divider">/</span>
+        </li>
+        <li class="active">{% trans "Przelewy24 transactions" %}</li>
+    </ul>
+{% endblock %}
+
+{% block headertext %}
+    {% trans "Przelewy24 transactions" %}
+{% endblock %}
+
+{% block dashboard_content %}
+
+    {% if object_list %}
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>{% trans "ID" %}</th>
+                    <th>{% trans "P24 Session ID" %}</th>
+                    <th>{% trans "Amount" %}</th>
+                    <th>{% trans "Status" %}</th>
+                    <th>{% trans "Last updated at" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in object_list %}
+
+                    <tr class="status{{ obj.status }}">
+                        <td>{{ obj.pk }}</td>
+                        <td><a href="{% url 'dashboard:p24-transaction-detail' obj.id %}">{{ obj.p24_session_id }}</a></td>
+                        <td>{{ obj.p24_kwota }}</td>
+                        <td>{{ obj.get_status_display }}</td>
+                        <td>{{ obj.updated_at }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% include "partials/pagination.html" %}
+    {% else %}
+        <p>{% trans "No transactions have been made yet." %}</p>
+    {% endif %}
+
+{% endblock dashboard_content %}

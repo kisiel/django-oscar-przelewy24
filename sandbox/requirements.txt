@@ -1,0 +1,9 @@
+mysql-python
+ipython
+
+django-oscar==1.0.2
+pycountry==1.10
+
+django-debug-toolbar==1.2.2
+django-extensions==1.4.9
+django-debug-toolbar-template-timings==0.6.4

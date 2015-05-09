@@ -1,0 +1,13 @@
+{% load i18n %}
+
+<html>
+<head>
+    <title>{% trans 'Redirecting to' %} przelewy24.pl</title>
+</head>
+<body onload="document.forms.redirect_p24.submit()">
+    <form action="{{ p24_url }}" method="post" name="redirect_p24">
+        {{ prepare_form }}
+    </form>
+        <span>{% trans 'Loading' %}...</span>
+    </body>
+</html>

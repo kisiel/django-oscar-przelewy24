@@ -1,0 +1,52 @@
+{% extends 'dashboard/layout.html' %}
+{% load currency_filters %}
+{% load i18n %}
+{% load url from future %}
+
+{% block title %}
+    {% trans "Przelewy24 transaction:" %} {{ object.p24_session_id }} | {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
+            <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="{% url 'dashboard:p24-transactions-list' %}">{% trans "Przelewy24 transactions" %}</a>
+            <span class="divider">/</span>
+        </li>
+        <li class="active">{{ object.pk }}</li>
+    </ul>
+{% endblock %}
+
+{% block headertext %}
+    {% blocktrans with id=object.p24_session_id %}
+        Transaction {{ id }}
+    {% endblocktrans %}
+{% endblock %}
+
+{% block dashboard_content %}
+    <table class="table table-striped table-bordered">
+        <tbody>
+            <tr><th>{% trans "ID" %}</th><td>{{ object.pk }}</td></tr>
+            <tr><th>{% trans "P24 Session ID" %}</th><td>{{ object.p24_session_id }}</td></tr>
+            <tr><th>{% trans "Vendor ID" %}</th><td>{{ object.p24_id_sprzedawcy }}</td></tr>
+            <tr><th>{% trans "Vendor Email" %}</th><td>{{ object.p24_email }}</td></tr>
+            <tr><th>{% trans "Amount" %}</th><td>{{ object.p24_kwota }}</td></tr>
+            <tr><th>{% trans "P24 Order ID" %}</th><td>{{ object.p24_order_id }}</td></tr>
+            <tr><th>{% trans "P24 Order ID Full" %}</th><td>{{ object.p24_order_id_full }}</td></tr>
+            <tr><th>{% trans "P24 Return URL OK" %}</th><td>{{ object.p24_return_url_ok }}</td></tr>
+            <tr><th>{% trans "P24 Return URL ERROR" %}</th><td>{{ object.p24_return_url_error }}</td></tr>
+            <tr><th>{% trans "P24 Karta?" %}</th><td>{{ object.p24_karta|default:'-' }}</td></tr>
+            <tr><th>{% trans "P24 CRC" %}</th><td>{{ object.p24_crc }}</td></tr>
+            <tr><th>{% trans "P24 CRC2" %}</th><td>{{ object.p24_crc2 }}</td></tr>
+            <tr><th>{% trans "P24 Error Code" %}</th><td>{{ object.p24_error_code|default:'-' }}</td></tr>
+            <tr><th>{% trans "P24 Error Desc" %}</th><td>{{ object.p24_error_desc|default:'-' }}</td></tr>
+            <tr><th>{% trans "Status" %}</th><td>{{ object.get_status_display }}</td></tr>
+            <tr><th>{% trans "Created at " %}</th><td>{{ object.created_at }}</td></tr>
+            <tr><th>{% trans "Last updated at" %}</th><td>{{ object.updated_at }}</td></tr>
+        </tbody>
+    </table>
+{% endblock dashboard_content %}

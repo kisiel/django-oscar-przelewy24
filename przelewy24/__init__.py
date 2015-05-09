@@ -1,0 +1,3 @@
+VERSION = '0.1'
+PRZELEWY24_PL = 'Przelewy24.pl'
+LOGGING_PREFIX = 'P24'
