@@ -62,7 +62,7 @@
 
                     <tr class="status{{ obj.status }}">
                         <td>{{ obj.pk }}</td>
-                        <td><a href="{% url 'dashboard:p24-transaction-detail' obj.id %}">{{ obj.p24_session_id }}</a></td>
+                        <td><a href="{% url 'p24-transaction-detail' obj.id %}">{{ obj.p24_session_id }}</a></td>
                         <td>{{ obj.p24_kwota }}</td>
                         <td>{{ obj.get_status_display }}</td>
                         <td>{{ obj.updated_at }}</td>

@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     # 'apps.gateway',     # For allowing dashboard access
     'przelewy24'
 ]
-INSTALLED_APPS = INSTALLED_APPS + get_core_apps()
+INSTALLED_APPS = INSTALLED_APPS + get_core_apps(['apps.checkout'])
 
 SITE_ID = 1
 
@@ -191,7 +191,7 @@ OSCAR_DASHBOARD_NAVIGATION.append(
     {
         'label': gettext_noop('Przelewy24'),
         'icon': 'icon-globe',
-        'url_name': 'dashboard:p24-transactions-list',
+        'url_name': 'p24-transactions-list',
     })
 
 LOGGING = {

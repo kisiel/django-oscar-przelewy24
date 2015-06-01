@@ -1,13 +1,14 @@
 from django.conf.urls import patterns, url
 from django.contrib.admin.views.decorators import staff_member_required
 
-from oscar.apps.dashboard.app import DashboardApplication
+from oscar.core.application import Application
 
 from przelewy24.dashboard.views import Przelewy24TransactionListView, \
     Przelewy24TransactionDetailView
 
 
-class Przelewy24DashboardApplication(DashboardApplication):
+class Przelewy24DashboardApplication(Application):
+    name = None
     list_view = Przelewy24TransactionListView
     detail_view = Przelewy24TransactionDetailView
 
