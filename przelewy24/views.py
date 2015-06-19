@@ -14,19 +14,20 @@ from django.utils.timezone import now
 from django.utils.translation import ugettext as _
 from django.views.generic import View, TemplateView
 
-from oscar.apps.basket.models import Basket
-from oscar.apps.checkout.session import CheckoutSessionData
 from oscar.core.loading import get_class, get_model
 from przelewy24 import const, PRZELEWY24_PL, LOGGING_PREFIX
-from przelewy24.forms import Przelewy24PrepareForm
-from przelewy24.models import Przelewy24Transaction
+
 
 CheckoutSessionMixin = get_class('checkout.session', 'CheckoutSessionMixin')
+CheckoutSessionData = get_class('checkout.session', 'CheckoutSessionData')
 PaymentDetailsView = get_class('checkout.views', 'PaymentDetailsView')
 OrderPlacementMixin = get_class('checkout.mixins', 'OrderPlacementMixin')
 Selector = get_class('partner.strategy', 'Selector')
+Przelewy24PrepareForm = get_class('przelewy24.forms', 'Przelewy24PrepareForm')
+Basket = get_model('basket', 'Basket')
 Source = get_model('payment', 'Source')
 SourceType = get_model('payment', 'SourceType')
+Przelewy24Transaction = get_model('przelewy24', 'Przelewy24Transaction')
 
 logger = logging.getLogger(PRZELEWY24_PL)
 

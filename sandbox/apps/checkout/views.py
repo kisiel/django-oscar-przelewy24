@@ -1,10 +1,14 @@
 from django.core.urlresolvers import reverse
 
-from oscar.apps.checkout import views
-from oscar.apps.checkout.views import RedirectRequired
+from oscar.core.loading import get_class
 
 
-class Przelewy24PaymentDetailsView(views.PaymentDetailsView):
+PaymentDetailsView = get_class('oscar.apps.checkout.views',
+                               'PaymentDetailsView')
+RedirectRequired = get_class('oscar.apps.checkout.views', 'RedirectRequired')
+
+
+class Przelewy24PaymentDetailsView(PaymentDetailsView):
     preview = True
 
     def handle_payment(self, order_number, total, **kwargs):

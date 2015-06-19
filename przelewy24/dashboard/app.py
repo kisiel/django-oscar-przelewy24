@@ -2,15 +2,15 @@ from django.conf.urls import patterns, url
 from django.contrib.admin.views.decorators import staff_member_required
 
 from oscar.core.application import Application
-
-from przelewy24.dashboard.views import Przelewy24TransactionListView, \
-    Przelewy24TransactionDetailView
+from oscar.core.loading import get_class
 
 
 class Przelewy24DashboardApplication(Application):
     name = None
-    list_view = Przelewy24TransactionListView
-    detail_view = Przelewy24TransactionDetailView
+    list_view = get_class('przelewy24.dashboard.views',
+                          'Przelewy24TransactionListView')
+    detail_view = get_class('przelewy24.dashboard.views',
+                            'Przelewy24TransactionDetailView')
 
     def get_urls(self):
         urls = super(Przelewy24DashboardApplication, self).get_urls()
