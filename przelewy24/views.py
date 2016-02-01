@@ -2,6 +2,7 @@ import json
 import requests
 import logging
 import hashlib
+from decimal import Decimal as D
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -22,6 +23,8 @@ CheckoutSessionMixin = get_class('checkout.session', 'CheckoutSessionMixin')
 CheckoutSessionData = get_class('checkout.session', 'CheckoutSessionData')
 PaymentDetailsView = get_class('checkout.views', 'PaymentDetailsView')
 OrderPlacementMixin = get_class('checkout.mixins', 'OrderPlacementMixin')
+OrderTotalCalculator = get_class(
+    'checkout.calculators', 'OrderTotalCalculator')
 Selector = get_class('partner.strategy', 'Selector')
 Przelewy24PrepareForm = get_class('przelewy24.forms', 'Przelewy24PrepareForm')
 Basket = get_model('basket', 'Basket')
@@ -40,7 +43,19 @@ class Przelewy24PrepareView(OrderPlacementMixin, TemplateView):
         self.order_number = self.checkout_session.get_order_number()
         basket = self.request.basket
         self.basket_id = basket.id
-        self.order_total = basket.total_incl_tax
+
+        shipping_address = self.get_shipping_address(basket)
+        shipping_method = self.get_shipping_method(
+            basket, shipping_address)
+        if shipping_method:
+            shipping_charge = shipping_method.calculate(basket)
+        else:
+            # It's unusual to get here as a shipping method should be set by
+            # the time this skip-condition is called. In the absence of any
+            # other evidence, we assume the shipping charge is zero.
+            shipping_charge = D('0.00')
+        self.order_total = self.get_order_totals(
+            basket, shipping_charge=shipping_charge).incl_tax
 
         self.freeze_basket(basket)
         self.checkout_session.set_submitted_basket(basket)
